@@ -81,11 +81,10 @@ console.log(calculateTotalBalance(users)); // 20916
 /* TASK 08
 Массив имен всех пользователей у которых есть друг с указанным именем.*/
 
-const getUsersWithFriend = (users, friendName) => {
-  return users.filter((user) =>
-    user.friends.find((friend) => friend === friendName)
-  );
-};
+const getUsersWithFriend = (users, friendName) =>
+  users
+    .filter((user) => user.friends.includes(friendName))
+    .map((user) => user.name);
 
 console.log(getUsersWithFriend(users, "Briana Decker")); // [ 'Sharlene Bush', 'Sheree Anthony' ]
 console.log(getUsersWithFriend(users, "Goldie Gentry")); // [ 'Elma Head', 'Sheree Anthony' ]
@@ -95,8 +94,11 @@ console.log(getUsersWithFriend(users, "Goldie Gentry")); // [ 'Elma Head', 'Sher
 
 const getNamesSortedByFriendsCount = (users) => {
   return [...users]
-    .sort((prev, next) => (prev.friends.length > next.friends.length ? 1 : -1))
-    .map((friend) => friend.name);
+    .sort(
+      (firstUser, secondUser) =>
+        firstUser.friends.length - secondUser.friends.length
+    )
+    .map((user) => user.name);
 };
 
 console.log(getNamesSortedByFriendsCount(users));
